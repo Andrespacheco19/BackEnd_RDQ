@@ -1,3 +1,3 @@
-INSERT INTO public."roles"(name)
+INSERT INTO rdq.roles(name)
 VALUES ('user'),
        ('admin');

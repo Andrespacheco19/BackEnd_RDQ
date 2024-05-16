@@ -12,11 +12,11 @@ npm i
 2. Crear base de datos
 3. crear archivo .env en la riaz. Con esta varible local
 ```bash
-DATABASE_URL="postgresql://USUARIO:PASSWORD@localhost:PORT/DB_NAME?schema=public"
+DATABASE_URL="postgresql://USUARIO:PASSWORD@localhost:PORT/DB_NAME?schema=rdq"
 ```
 Ejemplo:
 ```bash
-DATABASE_URL="postgresql://postgres:ADMIN@localhost:5433/shopRDQ?schema=public"
+DATABASE_URL="postgresql://postgres:ADMIN@localhost:5433/shopRDQ?schema=rdq"
 ```
 4. ejecutar comando
 ```bash

@@ -1,5 +1,4 @@
--- CreateTable
-CREATE TABLE "customers" (
+CREATE TABLE rdq.customers (
     "identification" VARCHAR(20) NOT NULL,
     "first_name" VARCHAR(20) NOT NULL,
     "middle_name" VARCHAR(20),
@@ -17,7 +16,7 @@ CREATE TABLE "customers" (
 );
 
 -- CreateTable
-CREATE TABLE "departaments" (
+CREATE TABLE rdq.departaments (
     "id_departament" VARCHAR(2) NOT NULL,
     "name" VARCHAR(100) NOT NULL,
 
@@ -25,7 +24,7 @@ CREATE TABLE "departaments" (
 );
 
 -- CreateTable
-CREATE TABLE "cities" (
+CREATE TABLE rdq.cities (
     "id_city" VARCHAR(3) NOT NULL,
     "idDepartament" VARCHAR(2) NOT NULL,
     "name" VARCHAR(100) NOT NULL,
@@ -34,7 +33,7 @@ CREATE TABLE "cities" (
 );
 
 -- CreateTable
-CREATE TABLE "orders" (
+CREATE TABLE rdq.orders (
     "order_number" SERIAL NOT NULL,
     "identification_user" VARCHAR(20) NOT NULL,
     "type_process" VARCHAR(15) NOT NULL,
@@ -45,7 +44,7 @@ CREATE TABLE "orders" (
 );
 
 -- CreateTable
-CREATE TABLE "users" (
+CREATE TABLE rdq.users (
     "id_user" SERIAL NOT NULL,
     "name" VARCHAR(30) NOT NULL,
     "last_name" VARCHAR(30) NOT NULL,
@@ -61,7 +60,7 @@ CREATE TABLE "users" (
 );
 
 -- CreateTable
-CREATE TABLE "roles" (
+CREATE TABLE rdq.roles (
     "id_rol" SERIAL NOT NULL,
     "name" VARCHAR(20) NOT NULL,
 
@@ -69,11 +68,11 @@ CREATE TABLE "roles" (
 );
 
 -- CreateTable
-CREATE TABLE "product_orders" (
+CREATE TABLE rdq.product_orders (
     "delivery_date" TIMESTAMP(3) NOT NULL,
     "delivery_invoice" TIMESTAMP(3) NOT NULL,
     "reception_date" TIMESTAMP(3),
-    "recepcion_invoice" TIMESTAMP(3),
+    "reception_invoice" TIMESTAMP(3),
     "product_amount" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL,
     "subtotal" DECIMAL(65,30) NOT NULL,
@@ -84,7 +83,7 @@ CREATE TABLE "product_orders" (
 );
 
 -- CreateTable
-CREATE TABLE "contents" (
+CREATE TABLE rdq.contents(
     "id_content" SERIAL NOT NULL,
     "name" VARCHAR(20) NOT NULL,
     "unit_measurement" VARCHAR(10) NOT NULL,
@@ -94,7 +93,7 @@ CREATE TABLE "contents" (
 );
 
 -- CreateTable
-CREATE TABLE "packagings" (
+CREATE TABLE rdq.packagings (
     "id_packaging" VARCHAR(8) NOT NULL,
     "hydrostatic_date" TIMESTAMP(3) NOT NULL,
     "stock" INTEGER NOT NULL,
@@ -106,7 +105,7 @@ CREATE TABLE "packagings" (
 );
 
 -- CreateTable
-CREATE TABLE "type_packagings" (
+CREATE TABLE rdq.type_packagings (
     "id_type_packaging" SERIAL NOT NULL,
     "pressure_amount" DOUBLE PRECISION NOT NULL,
     "size" DOUBLE PRECISION NOT NULL,
@@ -117,34 +116,34 @@ CREATE TABLE "type_packagings" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "customers_email_key" ON "customers"("email");
+CREATE UNIQUE INDEX "customers_email_key" ON rdq.customers("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+CREATE UNIQUE INDEX "users_email_key" ON rdq.users("email");
 
 -- AddForeignKey
-ALTER TABLE "customers" ADD CONSTRAINT "customers_idCity_fkey" FOREIGN KEY ("idCity") REFERENCES "cities"("id_city") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE rdq.customers ADD CONSTRAINT "customers_idCity_fkey" FOREIGN KEY ("idCity") REFERENCES rdq.cities("id_city") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "cities" ADD CONSTRAINT "cities_idDepartament_fkey" FOREIGN KEY ("idDepartament") REFERENCES "departaments"("id_departament") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE rdq.cities ADD CONSTRAINT "cities_idDepartament_fkey" FOREIGN KEY ("idDepartament") REFERENCES rdq.departaments("id_departament") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "orders" ADD CONSTRAINT "orders_iduser_fkey" FOREIGN KEY ("iduser") REFERENCES "users"("id_user") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE rdq.orders ADD CONSTRAINT "orders_iduser_fkey" FOREIGN KEY ("iduser") REFERENCES rdq.users("id_user") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "orders" ADD CONSTRAINT "orders_identification_user_fkey" FOREIGN KEY ("identification_user") REFERENCES "customers"("identification") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE rdq.orders ADD CONSTRAINT "orders_identification_user_fkey" FOREIGN KEY ("identification_user") REFERENCES rdq.customers("identification") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "users" ADD CONSTRAINT "users_idRol_fkey" FOREIGN KEY ("idRol") REFERENCES "roles"("id_rol") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE rdq.users ADD CONSTRAINT "users_idRol_fkey" FOREIGN KEY ("idRol") REFERENCES rdq.roles("id_rol") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "product_orders" ADD CONSTRAINT "product_orders_order_number_fkey" FOREIGN KEY ("order_number") REFERENCES "orders"("order_number") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE rdq.product_orders ADD CONSTRAINT "product_orders_order_number_fkey" FOREIGN KEY ("order_number") REFERENCES rdq.orders("order_number") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "product_orders" ADD CONSTRAINT "product_orders_idPackaging_fkey" FOREIGN KEY ("idPackaging") REFERENCES "packagings"("id_packaging") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE rdq.product_orders ADD CONSTRAINT "product_orders_idPackaging_fkey" FOREIGN KEY ("idPackaging") REFERENCES rdq.packagings("id_packaging") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "packagings" ADD CONSTRAINT "packagings_idContent_fkey" FOREIGN KEY ("idContent") REFERENCES "contents"("id_content") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE rdq.packagings ADD CONSTRAINT "packagings_idContent_fkey" FOREIGN KEY ("idContent") REFERENCES rdq.contents("id_content") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "packagings" ADD CONSTRAINT "packagings_idTypePackaging_fkey" FOREIGN KEY ("idTypePackaging") REFERENCES "type_packagings"("id_type_packaging") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE rdq.packagings ADD CONSTRAINT "packagings_idTypePackaging_fkey" FOREIGN KEY ("idTypePackaging") REFERENCES rdq.type_packagings("id_type_packaging") ON DELETE RESTRICT ON UPDATE CASCADE;

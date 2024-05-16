@@ -44,7 +44,7 @@ module.exports = {
       user.idRol = parseInt(aux_rol);
 
       const newUser = await prisma.user.create({
-        data: user,
+        data: user, 
       });
 
       res.status(201).json({

@@ -2,61 +2,61 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const { sendError, MESSAGE } = require("../others/errors");
 
-const getAllPackagings = async (req, res) => {
+const getAllContents = async (req, res) => {
   try {
-    const packagings = await prisma.packaging.findMany();
+    const contents = await prisma.content.findMany();
     res.status(200).json({
       success: true,
-      data: packagings,
+      data: contents,
     });
   } catch (error) {
     return sendError(res, MESSAGE.ERROR_SERVIDOR, 500);
   }
 };
 
-const createPackaging = async (req, res) => {
+const createContent = async (req, res) => {
   try {
-    const packagingData = req.body;
-    const newPackaging = await prisma.packaging.create({
-      data: packagingData,
+    const contentData = req.body;
+    const newContent = await prisma.content.create({
+      data: contentData,
     });
     res.status(201).json({
       success: true,
-      data: newPackaging,
-      message: "Packaging creado exitosamente",
+      data: newContent,
+      message: "Contenido creado exitosamente",
     });
   } catch (error) {
     return sendError(res, MESSAGE.ERROR_SERVIDOR, 500);
   }
 };
 
-const updatePackaging = async (req, res) => {
+const updateContent = async (req, res) => {
   try {
     const { id } = req.params;
     const updatedData = req.body;
-    const updatedPackaging = await prisma.packaging.update({
-      where: { id_packaging: id },
+    const updatedContent = await prisma.content.update({
+      where: { id_content: id },
       data: updatedData,
     });
     res.status(200).json({
       success: true,
-      data: updatedPackaging,
-      message: "Packaging actualizado exitosamente",
+      data: updatedContent,
+      message: "Contenido actualizado exitosamente",
     });
   } catch (error) {
     return sendError(res, MESSAGE.ERROR_SERVIDOR, 500);
   }
 };
 
-const deletePackaging = async (req, res) => {
+const deleteContent = async (req, res) => {
   try {
     const { id } = req.params;
-    await prisma.packaging.delete({
-      where: { id_packaging: id },
+    await prisma.content.delete({
+      where: { id_content: id },
     });
     res.status(200).json({
       success: true,
-      message: "Packaging eliminado exitosamente",
+      message: "Contenido eliminado exitosamente",
     });
   } catch (error) {
     return sendError(res, MESSAGE.ERROR_SERVIDOR, 500);
@@ -64,8 +64,8 @@ const deletePackaging = async (req, res) => {
 };
 
 module.exports = {
-  getAllPackagings,
-  createPackaging,
-  updatePackaging,
-  deletePackaging,
+  getAllContents,
+  createContent,
+  updateContent,
+  deleteContent,
 };

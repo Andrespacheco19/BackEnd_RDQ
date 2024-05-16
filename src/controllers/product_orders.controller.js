@@ -8,7 +8,7 @@ const { sendError, MESSAGE } = require("../others/errors");
 module.exports = {
   async getAllProductOrders(req, res) {
     try {
-      const productOrders = await prisma.product_order.findMany();
+      const productOrders = await prisma.productOrder.findMany();
       res.status(200).json({
         success: true,
         data: productOrders,
@@ -22,7 +22,7 @@ module.exports = {
     try {
       const productOrder = req.body;
 
-      const newProductOrder = await prisma.product_order.create({
+      const newProductOrder = await prisma.productOrder.create({
         data: productOrder,
       });
 
@@ -39,7 +39,7 @@ module.exports = {
   async getProductOrderByOrderNumber(req, res) {
     try {
       const orderNumber = parseInt(req.params.orderNumber);
-      const productOrder = await prisma.product_order.findFirst({
+      const productOrder = await prisma.productOrder.findFirst({
         where: { order_number: orderNumber },
       });
 
@@ -94,7 +94,7 @@ module.exports = {
     try {
       const orderNumber = parseInt(req.params.orderNumber);
 
-      const productOrder = await prisma.product_order.findFirst({
+      const productOrder = await prisma.productOrder.findFirst({
         where: { order_number: orderNumber },
       });
 
@@ -105,7 +105,7 @@ module.exports = {
         });
       }
 
-      await prisma.product_order.delete({
+      await prisma.productOrder.delete({
         where: { order_number: orderNumber },
       });
 

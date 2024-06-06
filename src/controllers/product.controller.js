@@ -1,5 +1,5 @@
 const { sendError, MESSAGE, sendResponseOk } = require("../others/response");
-const { getByProductId, getAllProducts, newProduct } = require("../service/productService");
+const { getByProductId, getAllProducts, newProduct, updateProduct } = require("../service/productService");
 
 module.exports = {
     async getProductById(req, res){
@@ -16,6 +16,7 @@ module.exports = {
             return sendError(res, MESSAGE.ERROR_SERVIDOR);
         }
     },
+
     async getAllProducts(req, res){
         try {
             const products = await getAllProducts();
@@ -25,6 +26,7 @@ module.exports = {
             return sendError(res, MESSAGE.ERROR_SERVIDOR);
         }
     },
+
     async newProduct(req, res){
         try {
             const { content, typePackaging , ...packaging } = req.body;
@@ -43,6 +45,21 @@ module.exports = {
         } catch (error) {
             console.log(error)
             sendError(res, error.message, 500);
+        }
+    },
+
+    async updateProduct(req, res) {
+        try {
+            const { id } = req.params;
+            const { content, typePackaging, ...packaging } = req.body;
+
+            const updatedProduct = await updateProduct(id, content, typePackaging, packaging);
+            // const updatedProduct = await updateProduct(id, content, typePackaging, packaging);
+
+            return sendResponseOk(res, updatedProduct);
+        } catch (error) {
+            console.log(error);
+            return sendError(res, error.message, 500);
         }
     }
 }

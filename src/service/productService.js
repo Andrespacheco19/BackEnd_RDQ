@@ -56,4 +56,35 @@ async function getAllProducts() {
 
   return products;
 }
-module.exports = { newProduct, getByProductId, getAllProducts };
+
+async function updateProduct(id, content, typePackaging, packaging) {
+  try {
+    const updatedTypePackaging = await prisma.typePackaging.findFirst({
+      where: { cod: typePackaging.cod },
+    });
+
+    const updatedContent = await prisma.content.findFirst({
+      where: { id: content.id },
+    });
+
+    const updatedPackaging = await prisma.packaging.update({
+      where: { id: id },
+      data: {
+        hydrostatic_date: new Date(packaging.hydrostatic_date).toISOString(),
+        owner: packaging.owner,
+        ctt_id: updatedContent.id,
+        tpg_cod: updatedTypePackaging.cod,
+      },
+      include: {
+        typePackaging: true,
+        content: true,
+      },
+    });
+
+    return updatedPackaging;
+  } catch (error) {
+    console.log(error);
+    throw new Error(`Error al actualizar el empaque: ${error.message}`);
+  }
+}
+module.exports = { newProduct, getByProductId, getAllProducts, updateProduct };

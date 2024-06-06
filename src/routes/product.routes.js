@@ -7,6 +7,7 @@ const routerProduct = Router();
 routerProduct.post("", productController.newProduct);
 routerProduct.get("/name/:id", productController.getProductById);
 routerProduct.get("", productController.getAllProducts);
+routerProduct.put("/:id", productController.updateProduct);
 routerProduct.put("/:id", async (req, res) => {});
 
 routerProduct.get("/content", async (req, res) => {

@@ -1,5 +1,5 @@
 const { sendError, MESSAGE, sendResponseOk } = require("../others/response");
-const { getByProductId, getAllProducts, newProduct, updateProduct } = require("../service/productService");
+const { getByProductId, getAllProducts, newProduct, updateProduct, deleteProduct } = require("../service/productService");
 
 module.exports = {
     async getProductById(req, res){
@@ -57,6 +57,24 @@ module.exports = {
             // const updatedProduct = await updateProduct(id, content, typePackaging, packaging);
 
             return sendResponseOk(res, updatedProduct);
+        } catch (error) {
+            console.log(error);
+            return sendError(res, error.message, 500);
+        }
+    },
+
+    async deleteProduct(req, res) {
+        try {
+            const { id } = req.params;
+            const deletedProduct = await deleteProduct(id);
+            
+            res.status(201).json({
+                "success": true,
+                "message": "Producto eliminado",
+                "data": deletedProduct
+            })
+
+            // return sendResponseOk(res, deletedProduct);
         } catch (error) {
             console.log(error);
             return sendError(res, error.message, 500);

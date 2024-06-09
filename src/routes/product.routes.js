@@ -8,6 +8,7 @@ routerProduct.post("", productController.newProduct);
 routerProduct.get("/name/:id", productController.getProductById);
 routerProduct.get("", productController.getAllProducts);
 routerProduct.put("/:id", productController.updateProduct);
+routerProduct.delete("/:id", productController.deleteProduct); // Nueva ruta para eliminar el producto
 routerProduct.put("/:id", async (req, res) => {});
 
 routerProduct.get("/content", async (req, res) => {

@@ -87,4 +87,20 @@ async function updateProduct(id, content, typePackaging, packaging) {
     throw new Error(`Error al actualizar el empaque: ${error.message}`);
   }
 }
-module.exports = { newProduct, getByProductId, getAllProducts, updateProduct };
+
+async function deleteProduct(id) {
+  try {
+    const deletedPackaging = await prisma.packaging.delete({
+      where: { id: id },
+    });
+
+    return deletedPackaging;
+  } catch (error) {
+    console.log(error);
+    throw new Error(`Error al eliminar el empaque: ${error.message}`);
+  }
+}
+
+
+
+module.exports = { newProduct, getByProductId, getAllProducts, updateProduct, deleteProduct };
